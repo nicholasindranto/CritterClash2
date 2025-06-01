@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,8 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 moveInput;
     private Vector2 lastMoveDir; // ambil terakhir dia abis gerak menghadap kemana
     private Animator anim;
+
+    public Transform aim;
 
     // Start is called before the first frame update
     void Start()
@@ -26,11 +29,20 @@ public class PlayerMovement : MonoBehaviour
         if (moveInput.x != 0)
         {
             transform.localScale = new Vector3((Mathf.Sign(moveInput.x)) * 3, 3, 3); // hadap sesuai arahnya kanan atau kiri
-            // Mathf.Sign = kita ambil positif atau negatifnya
+                                                                                     // Mathf.Sign = kita ambil positif atau negatifnya
         }
         else if (lastMoveDir.x != 0)
         {
             transform.localScale = new Vector3((Mathf.Sign(lastMoveDir.x)) * 3, 3, 3); // hadap sesuai arah gerakan terakhir
+        }
+
+        // arahkan aim sesuai arah terakhir gerakan
+        if (lastMoveDir != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(lastMoveDir.y, lastMoveDir.x) * Mathf.Rad2Deg;
+            // Mathf.Atan2() -> menghasilkan derajat kaya 0 untuk kanan, 90 untuk atas, 180 untuk kiri
+            aim.rotation = Quaternion.Euler(0, 0, angle - 90);
+            // angle - 90 -> karna by default arahnya keatas jadi di -90
         }
     }
 
