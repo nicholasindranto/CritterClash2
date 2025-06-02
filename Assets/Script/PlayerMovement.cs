@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 2f;
+    [SerializeField] private float speed = 5f;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Vector2 lastMoveDir; // ambil terakhir dia abis gerak menghadap kemana
