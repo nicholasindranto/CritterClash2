@@ -28,12 +28,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (moveInput.x != 0)
         {
-            transform.localScale = new Vector3((Mathf.Sign(moveInput.x)) * 3, 3, 3); // hadap sesuai arahnya kanan atau kiri
+            transform.localScale = new Vector3((Mathf.Sign(moveInput.x)) * 1, 1, 1); // hadap sesuai arahnya kanan atau kiri
                                                                                      // Mathf.Sign = kita ambil positif atau negatifnya
         }
         else if (lastMoveDir.x != 0)
         {
-            transform.localScale = new Vector3((Mathf.Sign(lastMoveDir.x)) * 3, 3, 3); // hadap sesuai arah gerakan terakhir
+            transform.localScale = new Vector3((Mathf.Sign(lastMoveDir.x)) * 1, 1, 1); // hadap sesuai arah gerakan terakhir
         }
 
         // arahkan aim sesuai arah terakhir gerakan
