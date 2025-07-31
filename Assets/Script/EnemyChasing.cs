@@ -7,11 +7,14 @@ public class EnemyChasing : MonoBehaviour
     public Transform player; // reference ke player nya
     public float moveSpeed = 1f; // kecepatan gerakan enemy
     private Rigidbody2D rb; // reference ke rigidbody nya
-    private Vector2 moveDirection;
+    private string lastDirection;
+    private Animator anim;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        player = GameObject.FindWithTag("Player").transform;
     }
 
     // Start is called before the first frame update
@@ -23,20 +26,28 @@ public class EnemyChasing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player)
-        {
-            Vector3 direction = (player.position - transform.position).normalized;
-            moveDirection = direction;
+        if (player == null) return;
 
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            rb.rotation = angle;
-        }
-    }
-    
-    private void FixedUpdate() {
-        if (player)
+        // menentukan direction sesuai posisi enemy dan player
+        Vector2 dir = (player.position - transform.position).normalized;
+        string direction = GetDirection(dir);
+
+        if (direction != lastDirection)
         {
-            rb.velocity = new Vector2(moveDirection.x, moveDirection.y) * moveSpeed;
+            string animName = direction + "_walk";
+            if (animName == "left_walk") transform.localScale = new Vector3(-1, 1, 1); // hadap kiri
+            else transform.localScale = new Vector3(1, 1, 1); // hadap biasa
+            anim.Play(direction + "_walk");
+            lastDirection = direction;
         }
+
+        // enemy bergerak ke arah player
+        transform.position = Vector2.MoveTowards(transform.position, player.position, 2f * Time.deltaTime);
+    }
+
+    private string GetDirection(Vector2 dir)
+    {
+        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) return dir.x > 0 ? "right" : "left";
+        else return dir.y > 0 ? "up" : "down";
     }
 }
