@@ -9,12 +9,14 @@ public class EnemyChasing : MonoBehaviour
     private Rigidbody2D rb; // reference ke rigidbody nya
     private string lastDirection;
     private Animator anim;
+    private EnemyAttack enemyAttack;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         player = GameObject.FindWithTag("Player").transform;
+        enemyAttack = GetComponent<EnemyAttack>();
     }
 
     // Start is called before the first frame update
@@ -28,21 +30,28 @@ public class EnemyChasing : MonoBehaviour
     {
         if (player == null) return;
 
-        // menentukan direction sesuai posisi enemy dan player
-        Vector2 dir = (player.position - transform.position).normalized;
-        string direction = GetDirection(dir);
-
-        if (direction != lastDirection)
+        if (!enemyAttack.isPlayerInRange)
         {
-            string animName = direction + "_walk";
-            if (animName == "left_walk") transform.localScale = new Vector3(-1, 1, 1); // hadap kiri
-            else transform.localScale = new Vector3(1, 1, 1); // hadap biasa
-            anim.Play(direction + "_walk");
-            lastDirection = direction;
-        }
+            // menentukan direction sesuai posisi enemy dan player
+            Vector2 dir = (player.position - transform.position).normalized;
+            string direction = GetDirection(dir);
 
-        // enemy bergerak ke arah player
-        transform.position = Vector2.MoveTowards(transform.position, player.position, 2f * Time.deltaTime);
+            if (direction != lastDirection)
+            {
+                string animName = direction + "_walk";
+                if (animName == "left_walk") transform.localScale = new Vector3(-1, 1, 1); // hadap kiri
+                else transform.localScale = new Vector3(1, 1, 1); // hadap biasa
+                anim.Play(direction + "_walk");
+                lastDirection = direction;
+            }
+
+            // enemy bergerak ke arah player
+            transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+        }
+        else
+        {
+            rb.velocity = Vector2.zero;
+        }
     }
 
     private string GetDirection(Vector2 dir)
