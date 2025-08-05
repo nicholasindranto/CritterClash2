@@ -8,7 +8,7 @@ public class AttackRangeTrigger : MonoBehaviour
 
     private void Awake()
     {
-        enemyAttack = GetComponent<EnemyAttack>();
+        enemyAttack = GetComponentInParent<EnemyAttack>();
     }
 
     // Start is called before the first frame update

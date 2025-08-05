@@ -54,7 +54,7 @@ public class EnemyChasing : MonoBehaviour
         }
     }
 
-    private string GetDirection(Vector2 dir)
+    public string GetDirection(Vector2 dir)
     {
         if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) return dir.x > 0 ? "right" : "left";
         else return dir.y > 0 ? "up" : "down";
