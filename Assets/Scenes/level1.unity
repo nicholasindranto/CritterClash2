@@ -128,6 +128,73 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1380690594157024071, guid: 7e0d43b91b0ae754a8b7708f71ac1d08, type: 3}
   m_PrefabInstance: {fileID: 2935042208122516326}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &314157830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 314157831}
+  - component: {fileID: 314157832}
+  m_Layer: 0
+  m_Name: AttackCollider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &314157831
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314157830}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -1.71, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 506574150}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &314157832
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 314157830}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.7
 --- !u!1 &398728411
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,6 +285,11 @@ MonoBehaviour:
   m_BoundingShape2D: {fileID: 5673599860696975233}
   m_ConfineScreenEdges: 1
   m_Damping: 0
+--- !u!4 &506574150 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2874119251308009042, guid: 98442580d5e683248814eabc1977c54a, type: 3}
+  m_PrefabInstance: {fileID: 6543356007709288469}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -18254,9 +18326,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4756849822525835714, guid: 98442580d5e683248814eabc1977c54a, type: 3}
+      propertyPath: secondUntilDone
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 2874119251308009042, guid: 98442580d5e683248814eabc1977c54a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 314157831}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98442580d5e683248814eabc1977c54a, type: 3}
 --- !u!1001 &7541364505675679754

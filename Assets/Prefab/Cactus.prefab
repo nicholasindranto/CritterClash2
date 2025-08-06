@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Cactus
   attackDelay: 0.1
+  secondUntilDone: 0.6
   isPlayerInRange: 0
   isAttacking: 0
 --- !u!1 &5031567139722867539

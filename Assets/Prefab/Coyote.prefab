@@ -215,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Coyote
   attackDelay: 0.6
+  secondUntilDone: 0.5
   isPlayerInRange: 0
   isAttacking: 0
 --- !u!1 &5111485597206215677

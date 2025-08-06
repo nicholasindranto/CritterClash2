@@ -7,9 +7,10 @@ public class EnemyChasing : MonoBehaviour
     public Transform player; // reference ke player nya
     public float moveSpeed = 1f; // kecepatan gerakan enemy
     private Rigidbody2D rb; // reference ke rigidbody nya
-    private string lastDirection;
     private Animator anim;
     private EnemyAttack enemyAttack;
+    private float lastDirectionX;
+    private float lastDirectionY;
 
     private void Awake()
     {
@@ -34,16 +35,16 @@ public class EnemyChasing : MonoBehaviour
         {
             // menentukan direction sesuai posisi enemy dan player
             Vector2 dir = (player.position - transform.position).normalized;
-            string direction = GetDirection(dir);
 
-            if (direction != lastDirection)
-            {
-                string animName = direction + "_walk";
-                if (animName == "left_walk") transform.localScale = new Vector3(-1, 1, 1); // hadap kiri
-                else transform.localScale = new Vector3(1, 1, 1); // hadap biasa
-                anim.Play(direction + "_walk");
-                lastDirection = direction;
-            }
+            // update lastdirection
+            lastDirectionX = dir.x;
+            lastDirectionY = dir.y;
+
+            if (dir.x != 0) transform.localScale = new Vector3((Mathf.Sign(dir.x)) * 1, 1, 1);
+            else if (lastDirectionX != 0) transform.localScale = new Vector3((Mathf.Sign(lastDirectionX)) * 1, 1, 1);
+
+            anim.SetFloat("DirectionX", dir.x);
+            anim.SetFloat("DirectionY", dir.y);
 
             // enemy bergerak ke arah player
             transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
@@ -52,11 +53,5 @@ public class EnemyChasing : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
-    }
-
-    public string GetDirection(Vector2 dir)
-    {
-        if (Mathf.Abs(dir.x) > Mathf.Abs(dir.y)) return dir.x > 0 ? "right" : "left";
-        else return dir.y > 0 ? "up" : "down";
     }
 }
