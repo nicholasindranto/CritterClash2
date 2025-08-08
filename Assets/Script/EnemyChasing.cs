@@ -29,29 +29,36 @@ public class EnemyChasing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player == null) return;
+        if (player == null)
+        {
+            Debug.Log("gak ada player");
+            Destroy(gameObject);
+            return;
+        }
 
         if (!enemyAttack.isPlayerInRange)
-        {
-            // menentukan direction sesuai posisi enemy dan player
-            Vector2 dir = (player.position - transform.position).normalized;
+            {
+                // menentukan direction sesuai posisi enemy dan player
+                Vector2 dir = (player.position - transform.position).normalized;
 
-            // update lastdirection
-            lastDirectionX = dir.x;
-            lastDirectionY = dir.y;
+                // update lastdirection
+                lastDirectionX = dir.x;
+                lastDirectionY = dir.y;
 
-            if (dir.x != 0) transform.localScale = new Vector3((Mathf.Sign(dir.x)) * 1, 1, 1);
-            else if (lastDirectionX != 0) transform.localScale = new Vector3((Mathf.Sign(lastDirectionX)) * 1, 1, 1);
+                if (dir.x != 0) transform.localScale = new Vector3((Mathf.Sign(dir.x)) * 1, 1, 1);
+                else if (lastDirectionX != 0) transform.localScale = new Vector3((Mathf.Sign(lastDirectionX)) * 1, 1, 1);
 
-            anim.SetFloat("DirectionX", dir.x);
-            anim.SetFloat("DirectionY", dir.y);
+                enemyAttack.AimAtDirection(dir);
 
-            // enemy bergerak ke arah player
-            transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-        }
+                anim.SetFloat("DirectionX", dir.x);
+                anim.SetFloat("DirectionY", dir.y);
+
+                // enemy bergerak ke arah player
+                transform.position = Vector2.MoveTowards(transform.position, player.position, moveSpeed * Time.deltaTime);
+            }
+            else
+            {
+                rb.velocity = Vector2.zero;
+            }
     }
 }

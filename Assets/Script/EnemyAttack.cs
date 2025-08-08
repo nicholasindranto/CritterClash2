@@ -7,6 +7,9 @@ public class EnemyAttack : MonoBehaviour
     public string enemyName;
     public float attackDelay;
     public float secondUntilDone;
+    public GameObject attackColPivot; // pivot attacknya
+    public Transform enemyAim; // lokasi aim si range attack
+    [SerializeField] private GameObject enemyBullet;
     private float cooldownAttack = 1.5f; // nanti mengikuti gamemanager
     public bool isPlayerInRange = false; // kalau player di jangkauan attack
     public bool isAttacking = false; // kalau enemy lagi attack atau tidak
@@ -31,7 +34,7 @@ public class EnemyAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        SetAttackColliderPivot(false); // make sure at first it is all false
     }
 
     // Update is called once per frame
@@ -41,8 +44,8 @@ public class EnemyAttack : MonoBehaviour
         if (enemyChasing.player == null || isAttacking) return;
 
         // kalau dalam jarak serang maka attack
-        if (isPlayerInRange) StartCoroutine(AttackCoroutine());
-        else StopCoroutine(AttackCoroutine());
+            if (isPlayerInRange) StartCoroutine(AttackCoroutine());
+            else StopCoroutine(AttackCoroutine());
     }
 
     IEnumerator AttackCoroutine()
@@ -67,20 +70,36 @@ public class EnemyAttack : MonoBehaviour
 
         yield return new WaitForSeconds(attackDelay);
 
-        if (enemyName == "Coffin")
+        SetAttackColliderPivot(true); // cause you attack we enable it
+        AimAtDirection(dir); // arahkan aiming nya
+
+        if (enemyName != "Coffin") // cactus atau coyote
         {
-            
-        }
-        else
-        {
-            
+            // bikin bulletnya
+            GameObject eBullet = Instantiate(enemyBullet, enemyAim.position, attackColPivot.transform.rotation);
+            eBullet.GetComponent<Rigidbody2D>().AddForce(-attackColPivot.transform.up * 10f, ForceMode2D.Impulse);
+            Destroy(eBullet, 2f);
         }
 
         yield return new WaitForSeconds(secondUntilDone);
 
+        SetAttackColliderPivot(false); // it's already done attack
         isAttacking = false; // udah gak attack
 
         if (enemyName == "Coffin") anim.SetBool("isAttack", isAttacking);
         else anim.SetBool("isShooting", isAttacking);
+    }
+
+    public void AimAtDirection(Vector2 dir)
+    {
+        if (dir.y > 0.5f) attackColPivot.transform.rotation = Quaternion.Euler(0, 0, 180); // atas
+        else if (dir.y < -0.5f) attackColPivot.transform.rotation = Quaternion.Euler(0, 0, 0); // bawah
+        else if (dir.x > 0.5f) attackColPivot.transform.rotation = Quaternion.Euler(0, 0, 90); // kanan
+        else if (dir.x < -0.5f) attackColPivot.transform.rotation = Quaternion.Euler(0, 0, -90); // kiri
+    }
+
+    private void SetAttackColliderPivot(bool attack)
+    {
+        attackColPivot.SetActive(attack);
     }
 }

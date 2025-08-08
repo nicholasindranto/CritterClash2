@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletScript : MonoBehaviour
+public class EnemyBulletScript : MonoBehaviour
 {
-    public float damage = 1f;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -17,13 +15,12 @@ public class BulletScript : MonoBehaviour
     {
 
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        EnemyHealth enemyHealthScript = other.GetComponent<EnemyHealth>();
-        if (enemyHealthScript != null)
+    
+    private void OnTriggerEnter2D(Collider2D other) {
+        PlayerHealth playerHealthScript = other.GetComponent<PlayerHealth>();
+        if (playerHealthScript != null)
         {
-            enemyHealthScript.TakeDamage(damage);
+            playerHealthScript.PlayerHit(1f);
             Destroy(gameObject);
         }
     }

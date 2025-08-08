@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    [SerializeField] private float hp = 10f;
+    public float hp = 10f;
     private Animator anim;
     public bool deathStatus;
 
@@ -23,15 +23,22 @@ public class PlayerHealth : MonoBehaviour
 
     public void PlayerHit(float dmgAmount)
     {
+        if (deathStatus) return;
         hp -= dmgAmount;
-        if (!deathStatus)
-        {
-            anim.SetTrigger("isHit");
-        }
         if (hp <= 0)
         {
             deathStatus = true;
-            anim.SetTrigger("isDeath");
+            StartCoroutine(DeathCoroutine());
         }
+        else anim.SetTrigger("isHit");
+    }
+
+    IEnumerator DeathCoroutine()
+    {
+        Debug.Log("inside coroute death");
+        anim.SetTrigger("isDeath"); // animasi
+        yield return new WaitForSeconds(1f);
+        Debug.Log("after coroutine death");
+        Destroy(gameObject);
     }
 }
