@@ -10,7 +10,6 @@ public class EnemyAttack : MonoBehaviour
     public GameObject attackColPivot; // pivot attacknya
     public Transform enemyAim; // lokasi aim si range attack
     [SerializeField] private GameObject enemyBullet;
-    private float cooldownAttack = 1.5f; // nanti mengikuti gamemanager
     public bool isPlayerInRange = false; // kalau player di jangkauan attack
     public bool isAttacking = false; // kalau enemy lagi attack atau tidak
     private Rigidbody2D rb;
@@ -44,8 +43,8 @@ public class EnemyAttack : MonoBehaviour
         if (enemyChasing.player == null || isAttacking) return;
 
         // kalau dalam jarak serang maka attack
-            if (isPlayerInRange) StartCoroutine(AttackCoroutine());
-            else StopCoroutine(AttackCoroutine());
+        if (isPlayerInRange) StartCoroutine(AttackCoroutine());
+        else StopCoroutine(AttackCoroutine());
     }
 
     IEnumerator AttackCoroutine()
@@ -82,6 +81,9 @@ public class EnemyAttack : MonoBehaviour
         }
 
         yield return new WaitForSeconds(secondUntilDone);
+
+        // nunggu biar musuh e gak ngejar ngejar
+        yield return new WaitForSeconds(GameManager.Instance.cooldownAttack);
 
         SetAttackColliderPivot(false); // it's already done attack
         isAttacking = false; // udah gak attack

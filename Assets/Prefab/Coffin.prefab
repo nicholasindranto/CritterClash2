@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9129255517419269248}
   - component: {fileID: 8383209053389951405}
   - component: {fileID: 5310900440377417181}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 205037867332970801}
   - component: {fileID: 5056589442802230355}
   - component: {fileID: 4756849822525835714}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Coffin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  deathStatus: 0
 --- !u!95 &7554269627398241677
 Animator:
   serializedVersion: 5
@@ -298,6 +299,8 @@ MonoBehaviour:
   attackDelay: 0.1
   secondUntilDone: 1
   attackColPivot: {fileID: 5357326806901515617}
+  enemyAim: {fileID: 0}
+  enemyBullet: {fileID: 0}
   isPlayerInRange: 0
   isAttacking: 0
 --- !u!1 &5357326806901515617
@@ -309,7 +312,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1857926834428639873}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackColliderPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +346,7 @@ GameObject:
   - component: {fileID: 4978104580907980661}
   - component: {fileID: 996686430160623566}
   - component: {fileID: 664813748569504206}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

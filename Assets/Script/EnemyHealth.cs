@@ -36,6 +36,7 @@ public class EnemyHealth : MonoBehaviour
         if (health <= 0)
         {
             deathStatus = true;
+            GameManager.Instance.enemySpawned--;
             StartCoroutine(DeathCoroutine());
         }
     }

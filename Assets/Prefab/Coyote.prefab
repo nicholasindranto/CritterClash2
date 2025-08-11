@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3735663711129355082}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 819756753792659577}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackColliderPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 4805534974824400751}
   - component: {fileID: 5660121857487244888}
   - component: {fileID: 7770159830874186251}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Coyote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,6 +251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  deathStatus: 0
 --- !u!114 &5660121857487244888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,7 +297,7 @@ GameObject:
   - component: {fileID: 8553119681459225491}
   - component: {fileID: 1565982149050839726}
   - component: {fileID: 5713152520539877179}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
