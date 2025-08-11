@@ -60,6 +60,9 @@ public class GameManager : MonoBehaviour
             maxEnemySpawn = 15;
         }
 
+        // update the volume each time from player prefs
+        audioSource.volume = PlayerPrefs.GetFloat("audio", 1f);
+
         // kalau bgm nya selesai maka random lagunya
         if (!audioSource.isPlaying) PlayRandomBGM();
     }

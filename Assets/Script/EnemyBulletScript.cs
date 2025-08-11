@@ -15,12 +15,14 @@ public class EnemyBulletScript : MonoBehaviour
     {
 
     }
-    
-    private void OnTriggerEnter2D(Collider2D other) {
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
         PlayerHealth playerHealthScript = other.GetComponent<PlayerHealth>();
         if (playerHealthScript != null)
         {
-            playerHealthScript.PlayerHit(1f);
+            // damage sesuai levelnya
+            playerHealthScript.PlayerHit(GameManager.Instance.level);
             Destroy(gameObject);
         }
     }

@@ -17,6 +17,11 @@ public class SceneController : MonoBehaviour
 
     }
 
+    public void Credit()
+    {
+        SceneManager.LoadScene("credit");
+    }
+
     public void Level1()
     {
         GameManager.Instance.level = 1;
