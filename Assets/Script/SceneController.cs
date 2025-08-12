@@ -24,18 +24,24 @@ public class SceneController : MonoBehaviour
 
     public void Level1()
     {
+        GameManager.Instance.uiWin.SetActive(false);
+        GameManager.Instance.uiLose.SetActive(false);
         GameManager.Instance.level = 1;
         SceneManager.LoadScene("level1");
     }
 
     public void Level2()
     {
+        GameManager.Instance.uiWin.SetActive(false);
+        GameManager.Instance.uiLose.SetActive(false);
         GameManager.Instance.level = 2;
         SceneManager.LoadScene("level2");
     }
 
     public void Level3()
     {
+        GameManager.Instance.uiWin.SetActive(false);
+        GameManager.Instance.uiLose.SetActive(false);
         GameManager.Instance.level = 3;
         SceneManager.LoadScene("level3");
     }
@@ -47,7 +53,7 @@ public class SceneController : MonoBehaviour
 
     public void LevelChoose()
     {
-        SceneManager.LoadScene("levelchoose");
+        SceneManager.LoadScene("lvlchoose");
     }
 
     public void Settings()

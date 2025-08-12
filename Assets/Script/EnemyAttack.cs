@@ -42,6 +42,13 @@ public class EnemyAttack : MonoBehaviour
         // kalau gak ada enemynya atau lagi attack y gak dijalanin
         if (enemyChasing.player == null || isAttacking) return;
 
+        // kalau game end maka destroy
+        if (GameManager.Instance.gameEnded)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         // kalau dalam jarak serang maka attack
         if (isPlayerInRange) StartCoroutine(AttackCoroutine());
         else StopCoroutine(AttackCoroutine());
@@ -81,9 +88,6 @@ public class EnemyAttack : MonoBehaviour
         }
 
         yield return new WaitForSeconds(secondUntilDone);
-
-        // nunggu biar musuh e gak ngejar ngejar
-        yield return new WaitForSeconds(GameManager.Instance.cooldownAttack);
 
         SetAttackColliderPivot(false); // it's already done attack
         isAttacking = false; // udah gak attack

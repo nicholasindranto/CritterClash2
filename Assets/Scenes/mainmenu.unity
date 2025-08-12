@@ -3333,10 +3333,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2035283368876020864, guid: d354b2f5096260947b12267793bc787f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4929413809756334917, guid: d354b2f5096260947b12267793bc787f, type: 3}
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7519731034892615910, guid: d354b2f5096260947b12267793bc787f, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1968601433}
+    - target: {fileID: 9217603764723142193, guid: d354b2f5096260947b12267793bc787f, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1968601433}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4552,7 +4564,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 85131434}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
-        m_MethodName: Quit
+        m_MethodName: Credit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

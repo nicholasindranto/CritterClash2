@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (level != 0 && !isSpawning && (GameManager.Instance.enemySpawned < maxEnemySpawned)) StartCoroutine(SpawnEnemy());
+        if (level != 0 && !isSpawning && (GameManager.Instance.enemySpawned < maxEnemySpawned) && !GameManager.Instance.gameEnded) StartCoroutine(SpawnEnemy());
     }
 
     IEnumerator SpawnEnemy()

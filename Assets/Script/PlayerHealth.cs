@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
     public float hp = 10f;
     private Animator anim;
     public bool deathStatus;
+    // event driven OOP untuk gamelose condition
+    public static event Action OnPlayerDied;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +26,13 @@ public class PlayerHealth : MonoBehaviour
 
     public void PlayerHit(float dmgAmount)
     {
-        if (deathStatus) return;
+        if (deathStatus || GameManager.Instance.gameEnded) return;
         hp -= dmgAmount;
         if (hp <= 0)
         {
             deathStatus = true;
+            // beri tahu gamemanager bahwa player died
+            OnPlayerDied?.Invoke();
             StartCoroutine(DeathCoroutine());
         }
         else anim.SetTrigger("isHit");

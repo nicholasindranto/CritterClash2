@@ -28,7 +28,7 @@ public class EnemyChasing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player == null)
+        if (player == null || GameManager.Instance.gameEnded)
         {
             Debug.Log("gak ada player");
             Destroy(gameObject);
@@ -52,6 +52,8 @@ public class EnemyChasing : MonoBehaviour
             anim.SetFloat("DirectionX", dir.x);
             anim.SetFloat("DirectionY", dir.y);
 
+            if (enemyAttack.isAttacking) StartCoroutine(WaitBeforeAttack());
+
             // enemy bergerak ke arah player
             transform.position = Vector2.MoveTowards(transform.position, player.position, (GameManager.Instance.level) * Time.deltaTime);
         }
@@ -59,5 +61,11 @@ public class EnemyChasing : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
         }
+    }
+
+    IEnumerator WaitBeforeAttack()
+    {
+        // nunggu biar musuh e gak ngejar ngejar
+        yield return new WaitForSeconds(GameManager.Instance.cooldownAttack);
     }
 }

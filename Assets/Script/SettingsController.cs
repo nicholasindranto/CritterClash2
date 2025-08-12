@@ -8,7 +8,6 @@ public class SettingsController : MonoBehaviour
 {
     // reference ke slider sama dropdown nya
     public Slider audioSlider;
-    private float currentSlider = 0f;
 
     // Start is called before the first frame update
     void Start()

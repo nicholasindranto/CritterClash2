@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,7 +15,17 @@ public class GameManager : MonoBehaviour
     public int enemySpawned = 0;
     public float cooldownAttack = 0f;
     [SerializeField] private AudioClip[] bgmPlaylist;
+    // berapa lama harus bertahan biar game win
+    [SerializeField] private float surviveTime = 120f; // 2 menit
+    // reference ke ui gamewin sama game lose
+    public GameObject uiWin;
+    public GameObject uiLose;
+    [SerializeField] private float timer;
+    // gamenya end??
+    public bool gameEnded = false;
     private AudioSource audioSource;
+    public TextMeshProUGUI countdownText;
+    public GameObject countdownUI;
 
     private void Awake()
     {
@@ -33,16 +45,56 @@ public class GameManager : MonoBehaviour
         audioSource.playOnAwake = false;
     }
 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // cari dulu scene yang ada levelnya
+        if (scene.name.StartsWith("level"))
+        {
+            countdownUI.SetActive(true);
+            StartCoroutine(StartCountdownCoroutine());
+        }
+    }
+
+    private void OnEnable()
+    {
+        // mendengarkan ke player health, playernya mati kaga
+        PlayerHealth.OnPlayerDied += HandleLoseCondition;
+
+        // biar bisa njalanin coroutinenya
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // gak mau ndengerin lagi
+        PlayerHealth.OnPlayerDied -= HandleLoseCondition;
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         // play bgm nya
         PlayRandomBGM();
+
+        // set timernya
+        timer = surviveTime;
+
+        // set all ui win and lose and also countdownui to be false
+        uiWin.SetActive(false);
+        uiLose.SetActive(false);
+        countdownUI.SetActive(false);
+
+        // set gameended nya
+        gameEnded = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (gameEnded) return;
+
         // set up maximum jumlah enemy dan cooldown attacknya biar gak langsung ngejar
         if (level == 1 && maxEnemySpawn != 5 && cooldownAttack != 1.5f)
         {
@@ -77,5 +129,50 @@ public class GameManager : MonoBehaviour
         // play lagunya
         audioSource.clip = bgmPlaylist[randMusic];
         audioSource.Play();
+    }
+
+    private void HandleWinCondition()
+    {
+        gameEnded = true;
+        uiWin.SetActive(true);
+        uiLose.SetActive(false);
+    }
+
+    private void HandleLoseCondition()
+    {
+        gameEnded = true;
+        uiWin.SetActive(false);
+        uiLose.SetActive(true);
+    }
+
+    public IEnumerator StartCountdownCoroutine()
+    {
+        while (timer > 0 && !gameEnded)
+        {
+            // countdown
+            timer--;
+            Debug.Log("masuk");
+            UpdateTimerUI(timer);
+            if (timer <= 0)
+            {
+                HandleWinCondition(); // menang
+                yield break;
+            }
+            yield return new WaitForSeconds(1f);
+        }
+    }
+
+    private void UpdateTimerUI(float time)
+    {
+        // pastikan time tidak negatif
+        time = Mathf.Max(0, time);
+
+        // set menit dan detiknya
+        int minutes = Mathf.FloorToInt(time / 60f);
+        int seconds = Mathf.FloorToInt(time % 60f);
+
+        countdownText.text = $"{minutes:00}:{seconds:00}";
+
+        countdownText.color = time <= 10f ? Color.red : Color.white;
     }
 }
