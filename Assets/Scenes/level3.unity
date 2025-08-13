@@ -1770,7 +1770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5815145753300981291, guid: 058f98b71cb37f84084a699125a625ba, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 200
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 5815145753300981291, guid: 058f98b71cb37f84084a699125a625ba, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1806,7 +1806,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5815145753300981291, guid: 058f98b71cb37f84084a699125a625ba, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -827
+      value: -675
       objectReference: {fileID: 0}
     - target: {fileID: 5815145753300981291, guid: 058f98b71cb37f84084a699125a625ba, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -23130,7 +23130,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: -858707423
+  m_SortingLayerID: -2101451895
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &2090828576

@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     private AudioSource audioSource;
     public TextMeshProUGUI countdownText;
     public GameObject countdownUI;
+    public TextMeshProUGUI scoreText;
+    public GameObject scoreUI;
+    private int lastScore;
+    public GameObject buttonGameplay;
 
     private void Awake()
     {
@@ -43,6 +47,9 @@ public class GameManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.loop = false;
         audioSource.playOnAwake = false;
+
+        lastScore = PlayerPrefs.GetInt("score", 0);
+        scoreText.text = "Score\n" + lastScore;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -50,8 +57,24 @@ public class GameManager : MonoBehaviour
         // cari dulu scene yang ada levelnya
         if (scene.name.StartsWith("level"))
         {
+            // reset semuanya
+            StopAllCoroutines();
+            timer = surviveTime;
+            gameEnded = false;
             countdownUI.SetActive(true);
+            scoreUI.SetActive(true);
+            buttonGameplay.SetActive(true);
+            PlayerPrefs.SetInt("score", 0);
+            lastScore = PlayerPrefs.GetInt("score", 0);
+            scoreText.text = "Score\n" + lastScore;
+            enemySpawned = 0;
+
             StartCoroutine(StartCountdownCoroutine());
+        }
+        else
+        {
+            // countdownnya di stop
+            StopAllCoroutines();
         }
     }
 
@@ -85,6 +108,8 @@ public class GameManager : MonoBehaviour
         uiWin.SetActive(false);
         uiLose.SetActive(false);
         countdownUI.SetActive(false);
+        scoreUI.SetActive(false);
+        buttonGameplay.SetActive(false);
 
         // set gameended nya
         gameEnded = false;
@@ -174,5 +199,14 @@ public class GameManager : MonoBehaviour
         countdownText.text = $"{minutes:00}:{seconds:00}";
 
         countdownText.color = time <= 10f ? Color.red : Color.white;
+    }
+
+    private void FixedUpdate() {
+        if (lastScore != PlayerPrefs.GetInt("score", 0))
+        {
+            int score = PlayerPrefs.GetInt("score", 0);
+            lastScore = score;
+            scoreText.text = "Score\n" + lastScore;
+        }
     }
 }

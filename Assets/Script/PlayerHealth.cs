@@ -28,6 +28,8 @@ public class PlayerHealth : MonoBehaviour
     {
         if (deathStatus || GameManager.Instance.gameEnded) return;
         hp -= dmgAmount;
+        // kurangi scorenya
+        SubtractScore(1);
         if (hp <= 0)
         {
             deathStatus = true;
@@ -45,5 +47,15 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Debug.Log("after coroutine death");
         Destroy(gameObject);
+    }
+
+    private void SubtractScore(int value)
+    {
+        int score = PlayerPrefs.GetInt("score", 0);
+        score -= value;
+        // pastikan gak negatif
+        score = Mathf.Max(0, score);
+        PlayerPrefs.SetInt("score", score);
+        PlayerPrefs.Save();
     }
 }

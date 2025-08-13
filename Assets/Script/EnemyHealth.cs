@@ -37,6 +37,8 @@ public class EnemyHealth : MonoBehaviour
         {
             deathStatus = true;
             GameManager.Instance.enemySpawned--;
+            // add score berdasarkan level
+            AddScore(GameManager.Instance.level);
             StartCoroutine(DeathCoroutine());
         }
     }
@@ -46,5 +48,20 @@ public class EnemyHealth : MonoBehaviour
         anim.SetTrigger("isHit");
         yield return new WaitForSeconds(0.17f);
         Destroy(gameObject);
+    }
+
+    private void AddScore(int value)
+    {
+        // get score from player prefs
+        int score = PlayerPrefs.GetInt("score", 0);
+
+        // add the score
+        score += value;
+
+        // set to player prefs
+        PlayerPrefs.SetInt("score", score);
+
+        // save it
+        PlayerPrefs.Save();
     }
 }

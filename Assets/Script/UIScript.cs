@@ -15,7 +15,7 @@ public class UIScript : MonoBehaviour
         playerHealth = GameObject.FindWithTag("Player").GetComponent<PlayerHealth>();
         healthText = GetComponent<TextMeshProUGUI>();
         lastHP = playerHealth.hp;
-        healthText.text = "Health = " + lastHP;
+        healthText.text = "HP = " + lastHP;
     }
 
     // Start is called before the first frame update
@@ -34,7 +34,7 @@ public class UIScript : MonoBehaviour
         if (playerHealth != null && lastHP != playerHealth.hp)
         {
             lastHP = playerHealth.hp;
-            healthText.text = "Health = " + lastHP;
+            healthText.text = "HP = " + lastHP;
         }
     }
 }
