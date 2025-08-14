@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject scoreUI;
     private int lastScore;
     public GameObject buttonGameplay;
+    private int lastMusicIndex = -1; // reference ke music yang play sekarang
 
     private void Awake()
     {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         audioSource.loop = false;
         audioSource.playOnAwake = false;
+        audioSource.volume = PlayerPrefs.GetFloat("audio", 1f);
 
         lastScore = PlayerPrefs.GetInt("score", 0);
         scoreText.text = "Score\n" + lastScore;
@@ -149,11 +151,22 @@ public class GameManager : MonoBehaviour
         if (bgmPlaylist.Length == 0) return;
 
         // pilih lagu acak
-        int randMusic = Random.Range(0, bgmPlaylist.Length);
+        int randMusic;
+
+        do
+        {
+            randMusic = Random.Range(0, bgmPlaylist.Length);
+        } while (randMusic == lastMusicIndex && bgmPlaylist.Length > 1);
 
         // play lagunya
+        lastMusicIndex = randMusic;
         audioSource.clip = bgmPlaylist[randMusic];
         audioSource.Play();
+    }
+
+    public void SetVolume(float volume)
+    {
+        audioSource.volume = volume;
     }
 
     private void HandleWinCondition()
@@ -176,7 +189,6 @@ public class GameManager : MonoBehaviour
         {
             // countdown
             timer--;
-            Debug.Log("masuk");
             UpdateTimerUI(timer);
             if (timer <= 0)
             {
@@ -201,7 +213,8 @@ public class GameManager : MonoBehaviour
         countdownText.color = time <= 10f ? Color.red : Color.white;
     }
 
-    private void FixedUpdate() {
+    private void FixedUpdate()
+    {
         if (lastScore != PlayerPrefs.GetInt("score", 0))
         {
             int score = PlayerPrefs.GetInt("score", 0);

@@ -5,7 +5,6 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private int level = 0;
-    [SerializeField] private int maxEnemySpawned = 0;
     public Transform[] spawnPoint;
     private bool isSpawning = false;
 
@@ -13,13 +12,12 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         level = GameManager.Instance.level;
-        maxEnemySpawned = GameManager.Instance.maxEnemySpawn;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (level != 0 && !isSpawning && (GameManager.Instance.enemySpawned < maxEnemySpawned) && !GameManager.Instance.gameEnded) StartCoroutine(SpawnEnemy());
+        if (level != 0 && !isSpawning && (GameManager.Instance.enemySpawned < GameManager.Instance.maxEnemySpawn) && !GameManager.Instance.gameEnded) StartCoroutine(SpawnEnemy());
     }
 
     IEnumerator SpawnEnemy()
